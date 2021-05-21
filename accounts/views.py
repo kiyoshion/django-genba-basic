@@ -6,18 +6,20 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 
+from .forms import LoginForm, RegisterForm, ProfileForm
+
 class RegisterView(View):
   def get(self, request, *args, **kwargs):
     if request.user.is_authenticated:
       return redirect(reverse('shop:index'))
 
     context = {
-      'form': ResiterForm(),
+      'form': RegisterForm(),
     }
     return render(request, 'accounts/register.html', context)
 
   def post(self, request, *args, **kwargs):
-    form = ResiterForm(reqeust.POST)
+    form = RegisterForm(reqeust.POST)
 
     if not form.is_valid():
       return render(reqeust, 'accounts/register.html', { 'form': form })

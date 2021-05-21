@@ -464,3 +464,17 @@ python3 manage.py makemigrations
 ```sh
 python3 manage.py migrate
 ```
+
+## runserver
+
+開発用のWeb Server。
+
+```sh
+python3 manage.py runserver
+```
+
+## Django Admin
+
+各appでadmin.pyで管理画面に登録するモデルを追記する。
+
+## 動かん🤗
