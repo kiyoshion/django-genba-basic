@@ -1,0 +1,9 @@
+{% block messages %}
+{% if messages %}
+<div>
+  {% for message in messages %}
+  <div>{{ message }}</div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock messages %}

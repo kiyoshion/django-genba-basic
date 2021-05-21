@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block page_title %}-{% endblock %}</title>
+  {% block extra_css %}{% endblock %}
+
+</head>
+<body>
+  <div>
+    {% include '_message.html' %}
+    {% block content %}{% endblock %}
+  </div>
+  {% if user.is_authenticated %}
+  <div>
+    <a href="{% url 'accounts:logout' %}">ログアウト</a> | <a href="{% url 'accounts:profile' %}">プロフィール</a> | <a href="{% url 'shop:index' %}">ショップ</a>
+  </div>
+  {% endif %}
+</body>
+</html>

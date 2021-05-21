@@ -59,7 +59,7 @@ class LoginView(View):
 
 login = LoginView.as_view()
 
-class LogoutView(VIew):
+class LogoutView(View):
   def get(self, request, *args, **kwargs):
     if request.user.is_authenticated:
       auth_logout(request)
