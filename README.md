@@ -83,7 +83,7 @@ mysite
       L wsgi.py
 ```
 
-### プロジェクト構成のベストプラクティス
+### ☺️ベストプラクティス　ープロジェクト構成ー
 
 project名をconfigやdefault,rootなど別名にしておくと良い。
 
@@ -109,7 +109,7 @@ ROOT_URLCONF = 'config.urls'
 
 URLdispatcherがマッチするView関数が見つからなかった場合、handler404というViewを介して404.htmlを返却する。
 
-### urls.pyはアプリ毎に分割する（ベストプラクティス）
+### ☺️ベストプラクティス　ーurls.pyはアプリ毎に作成するー
 
 django.urlsのinclude関数で各アプリのurls.pyを読み込む。django-admin startappではurls.pyファイルは作成されないので、自分で作る。docker-composeにbashでログインしてコマンドを実行する。
 
@@ -123,7 +123,7 @@ django-admin startapp shop
 
 Viewはリクエストオブジェクトを受け取ってレスポンスオブジェクトを返す役割。django.shotcutsパッケージにいろいろなレスポンスを作る関数がある。
 
-### View関数ー＞関数ベース vs クラスベース
+### View関数　関数ベース vs クラスベース
 
 View関数には関数ベースとクラスベースがあるが、Generic Viewという汎用性のあるクラスが用意されているのでクラスベースの方が恩恵を受けられる。
 
@@ -165,9 +165,28 @@ Object.save()メソッドを使う。
 
 Object.delete()メソッドを使う。
 
-### 無駄にクエリが発行されないように
+### ☺️ベストプラクティス　ーUser Modelの拡張ー
 
-select_related()やprefetch_related()メソッドを使う。
+AbstractBaseUser > ガラッと拡張したい場合
+
+AbstractUser > ちょろっと拡張したい場合
+
+を継承する。上記を継承した場合、settings.pyでAUTH_USER_MODELを「accounts.CustomUser」に変更する。
+
+### ☺️ベストプラクティス　ー発行されるクエリを確認するー
+
+```python
+>>>print(Book.objects.filter(title_icontains='Django').query)
+SELECT "book"."id", "book"."title", "book"."image_path", "book"."publisher_id",  "book"."price", "book"."description", "book"."publish_date", "book"."created",  "book"."modified" FROM "book" WHERE "book"."title" LIKE %Django% ESCAPE'\'
+```
+
+### ☺️ベストプラクティス　ークエリ本数を減らすー
+
+forで回すときなど、select_related()やprefetch_related()メソッドが使えないか検討する。
+
+select_related() > 一や多　＞　一のリレーションをJOINで取得する
+
+prefetch_related() > 一や多　＞　多のリレーションをJOINで取得する
 
 ## Template
 
