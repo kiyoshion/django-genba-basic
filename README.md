@@ -443,3 +443,24 @@ django-environをインストールする。
 docker-compose exec web bash // Dockerに入る
 pip3 install django-environ
 ```
+
+## Migration
+
+1. makemigrations > migrationsファイルを作成する
+2. migrate > DBにテーブルを作成する
+
+### makemigrations
+
+app内のmodels.pyを編集してから実行する。
+
+```sh
+python3 manage.py makemigrations
+```
+
+### migrate
+
+作成したmigrationsファイルを実行し、DBに反映する。
+
+```sh
+python3 manage.py migrate
+```
