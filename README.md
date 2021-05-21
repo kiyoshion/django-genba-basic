@@ -206,3 +206,65 @@ context_processorsではデフォルトでいくつかの変数が使える。�
 ### ☺️ベストプラクティス　ーベーステンプレートを用意するー
 
 headタグなど共通する部分はベーステンプレートを用意し、各テンプレートでextendsする。
+
+## Form
+
+Formは以下の機能を持つ。
+
+1. ユーザの入力データを保持
+2. 入力データのバリデーションを行い、検証済みのデータやエラ〜メッセージを保持
+
+### Viewで使う
+
+```python
+form = LoginForm(request.POST)
+is_valid = form.is_valid()
+```
+
+### Templateで使う
+
+```python
+{{ form }}
+```
+
+もしくはformをforで回す。
+
+```python
+{% for field in form%}
+    <div class="field">
+        <div class="ui input">{{field}}</div>
+        {% if field.errors%}
+            <p class="red message">{{ field.errors.0 }}</p>
+        {% endif%}
+    </div>
+{% endfor%}
+{% if form.non_field_errors%}
+    <div class="ui red message">
+        <ul class="list">
+            {% for non_field_error in form.non_field_errors%}
+                <li>{{ non_field_error }}</li>
+            {% endfor%}
+        </ul>
+    </div>
+{% endif%}
+```
+
+### CSRF対策
+
+```python
+{% csrf_token %}
+```
+
+### ☺️ベストプラクティス　ーModelFormを継承するー
+
+Formの内容がモデルと重複する場合は、ModelFormを継承する。モデルのバリデーション処理が追加される。
+
+```python
+from django import forms
+from django.contrib.auth.models import User
+
+class RegisterForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password',)
+```
